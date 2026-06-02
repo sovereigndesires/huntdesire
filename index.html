@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sovereign Hunt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #030303;
+            --accent-red: #8b0000;
+            --text-silver: #d3d3d3;
+            --panel-bg: rgba(20, 20, 25, 0.85);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--primary-bg);
+            background-image: url('https://images.unsplash.com/photo-1534349762230-e0cb9cb6e5a4?q=80&w=2000&auto=format&fit=crop'); /* Placeholder for Wolf/Moon silhouette */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-silver);
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-red);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        .container {
+            background: var(--panel-bg);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Input Styling */
+        input[type="text"], input[type="password"], input[type="file"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #444;
+            color: var(--text-silver);
+            font-family: 'Playfair Display', serif;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(180deg, #3a0000 0%, #1a0000 100%);
+            border: 1px solid var(--accent-red);
+            color: var(--text-silver);
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: linear-gradient(180deg, #5a0000 0%, #2a0000 100%);
+            box-shadow: 0 0 15px var(--accent-red);
+        }
+
+        /* Sections */
+        #alpha-dashboard, #user-dashboard {
+            display: none;
+            max-width: 800px;
+        }
+
+        .leaderboard {
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+
+        .user-card {
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent-red);
+        }
+
+        .rating-btn {
+            width: auto;
+            padding: 5px 10px;
+            margin: 2px;
+            font-size: 12px;
+        }
+
+        /* Visual Seductive Element */
+        .login-visual {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 40px;
+            color: var(--accent-red);
+            text-shadow: 0 0 15px var(--accent-red);
+        }
+        
+        .disclaimer {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="login-screen">
+        <div class="login-visual">🫦</div> <h1>Submit to the Hunt</h1>
+        <p style="text-align: center; font-style: italic;">"Showcase your progress. Await the Alpha's verdict."</p>
+        
+        <input type="text" id="username" placeholder="Username (or 'ALPHA')">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="handleLogin()">Enter the Den</button>
+        <p class="disclaimer">By entering, you agree to the rules of submission. Your offerings are private to the ALPHA.</p>
+    </div>
+
+    <div class="container" id="alpha-dashboard">
+        <h1>ALPHA SANCTUM</h1>
+        <p>Welcome, Alpha. Review your subjects.</p>
+        
+        <div id="offerings-list">
+            <h3>Pending Offerings</h3>
+            </div>
+
+        <div class="leaderboard">
+            <h3>Global Leaderboard</h3>
+            <div id="alpha-leaderboard-content"></div>
+        </div>
+
+        <button style="margin-top:20px;" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="container" id="user-dashboard">
+        <h1 id="welcome-user">Welcome</h1>
+        <p>Your progress is measured. Offer your latest submission to the ALPHA.</p>
+
+        <div style="background: rgba(0,0,0,0.5); padding: 15px; margin-bottom: 20px;">
+            <p><em>What drives your submission today?</em></p>
+            <input type="text" id="intent" placeholder="Describe your intent...">
+            <p><em>How have you improved since your last offering?</em></p>
+            <textarea id="progress-desc" rows="3" placeholder="Detail your physical progress..."></textarea>
+        </div>
+
+        <label for="offering">Provide Visual Offering (URL for Demo):</label>
+        <input type="text" id="offering" placeholder="Image/Video URL">
+        <button onclick="submitOffering()">Submit Offering</button>
+
+        <div class="leaderboard">
+            <h3>Merit Leaderboard</h3>
+            <p style="font-size: 12px; color: #888;">Only top subjects earn their place.</p>
+            <div id="user-leaderboard-content"></div>
+        </div>
+
+        <button style="margin-top:20px;" onclick="logout()">Logout</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Firebase Configuration as provided
+        const firebaseConfig = {
+            apiKey: "AIzaSyCO-n3z7eN3Xj1zmISJJxZvjyER9GBVnLc",
+            authDomain: "sovereignhunt.firebaseapp.com",
+            databaseURL: "https://sovereignhunt-default-rtdb.firebaseio.com",
+            projectId: "sovereignhunt",
+            storageBucket: "sovereignhunt.firebasestorage.app",
+            messagingSenderId: "657296200169",
+            appId: "1:657296200169:web:22a0f9364344e682083b78"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        let currentUser = null;
+
+        // Make functions globally available for inline HTML onclick handlers
+        window.handleLogin = function() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value; // In a real app, use Firebase Auth
+
+            if (user === "") return alert("Enter a username.");
+
+            currentUser = user;
+            document.getElementById('login-screen').style.display = 'none';
+
+            if (user === 'ALPHA') {
+                document.getElementById('alpha-dashboard').style.display = 'block';
+                loadAlphaDashboard();
+            } else {
+                document.getElementById('user-dashboard').style.display = 'block';
+                document.getElementById('welcome-user').innerText = `Welcome, ${user}`;
+                loadUserDashboard();
+            }
+        };
+
+        window.submitOffering = function() {
+            const intent = document.getElementById('intent').value;
+            const progress = document.getElementById('progress-desc').value;
+            const mediaUrl = document.getElementById('offering').value;
+
+            if(!mediaUrl) return alert("You must provide an offering.");
+
+            const offeringsRef = ref(db, 'offerings');
+            const newOffering = push(offeringsRef);
+            
+            set(newOffering, {
+                username: currentUser,
+                intent: intent,
+                progress: progress,
+                mediaUrl: mediaUrl,
+                status: 'pending',
+                score: 0,
+                timestamp: Date.now()
+            }).then(() => {
+                alert("Your offering has been submitted to the ALPHA.");
+                document.getElementById('intent').value = '';
+                document.getElementById('progress-desc').value = '';
+                document.getElementById('offering').value = '';
+            });
+        };
+
+        function loadAlphaDashboard() {
+            const offeringsRef = ref(db, 'offerings');
+            onValue(offeringsRef, (snapshot) => {
+                const data = snapshot.val();
+                const list = document.getElementById('offerings-list');
+                list.innerHTML = '<h3>Pending Offerings</h3>';
+                
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const offer = data[key];
+                        if(offer.status === 'pending') {
+                            list.innerHTML += `
+                                <div class="user-card">
+                                    <strong>${offer.username}</strong><br>
+                                    <span style="font-size:12px; color:#aaa;">Intent: ${offer.intent}</span><br>
+                                    <span style="font-size:12px; color:#aaa;">Progress: ${offer.progress}</span><br>
+                                    <a href="${offer.mediaUrl}" target="_blank" style="color:var(--accent-red);">View Visual Offering</a><br>
+                                    <div style="margin-top:10px;">
+                                        Grade (1-10): 
+                                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="gradeOffering('${key}', ${n}, '${offer.username}')">${n}</button>`).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+            });
+            updateLeaderboard('alpha-leaderboard-content');
+        }
+
+        window.gradeOffering = function(offeringId, score, username) {
+            const updates = {};
+            updates['/offerings/' + offeringId + '/status'] = 'graded';
+            updates['/offerings/' + offeringId + '/score'] = score;
+            update(ref(db), updates);
+
+            // Update User Merit Total
+            const userRef = ref(db, 'users/' + username);
+            onValue(userRef, (snapshot) => {
+                let currentScore = snapshot.val() ? snapshot.val().totalScore : 0;
+                set(ref(db, 'users/' + username), {
+                    totalScore: currentScore + score
+                });
+            }, { onlyOnce: true });
+        };
+
+        function loadUserDashboard() {
+            updateLeaderboard('user-leaderboard-content');
+        }
+
+        function updateLeaderboard(elementId) {
+            const usersRef = ref(db, 'users');
+            onValue(usersRef, (snapshot) => {
+                const data = snapshot.val();
+                const container = document.getElementById(elementId);
+                container.innerHTML = '';
+                
+                if (data) {
+                    let sortedUsers = Object.keys(data).map(key => {
+                        return { username: key, score: data[key].totalScore };
+                    }).sort((a, b) => b.score - a.score);
+
+                    sortedUsers.forEach((user, index) => {
+                        container.innerHTML += `
+                            <div style="display:flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #333;">
+                                <span>#${index + 1} ${user.username}</span>
+                                <span style="color:var(--accent-red);">${user.score} pts</span>
+                            </div>
+                        `;
+                    });
+                }
+            });
+        }
+
+        window.logout = function() {
+            currentUser = null;
+            document.getElementById('alpha-dashboard').style.display = 'none';
+            document.getElementById('user-dashboard').style.display = 'none';
+            document.getElementById('login-screen').style.display = 'block';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+</html>
