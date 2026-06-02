@@ -6,397 +6,148 @@
     <title>The Sovereign Hunt</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep: #050505;
-            --accent-crimson: #7a0000;
-            --accent-glow: #ff1a1a;
-            --text-silver: #c0c0c0;
-            --panel-bg: rgba(15, 15, 20, 0.85);
-        }
-
-        body {
-            margin: 0; padding: 0;
-            background-color: var(--bg-deep);
-            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534349762230-e0cb9cb6e5a4?q=80&w=2000&auto=format&fit=crop');
-            background-size: cover; background-position: center; background-attachment: fixed;
-            color: var(--text-silver);
-            font-family: 'Playfair Display', serif;
-            display: flex; justify-content: center; align-items: flex-start;
-            min-height: 100vh; padding-top: 40px; box-sizing: border-box;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Cinzel', serif;
-            color: var(--accent-crimson);
-            text-align: center; text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 1px 1px 5px #000;
-        }
-
-        .container {
-            background: var(--panel-bg);
-            border: 1px solid #222; border-radius: 8px;
-            padding: 30px; width: 95%; max-width: 600px;
-            box-shadow: 0 0 40px rgba(122, 0, 0, 0.2);
-            backdrop-filter: blur(8px); margin-bottom: 40px;
-        }
-
-        input[type="text"], input[type="password"], textarea {
-            width: 100%; padding: 12px; margin: 10px 0 20px 0;
-            background: rgba(0, 0, 0, 0.8); border: 1px solid #333;
-            color: var(--text-silver); font-family: 'Playfair Display', serif;
-            box-sizing: border-box;
-        }
-
-        input:focus, textarea:focus {
-            outline: none; border-color: var(--accent-crimson);
-            box-shadow: 0 0 10px rgba(122, 0, 0, 0.4);
-        }
-
-        button {
-            width: 100%; padding: 12px;
-            background: linear-gradient(180deg, #2a0000 0%, #0a0000 100%);
-            border: 1px solid var(--accent-crimson); color: var(--text-silver);
-            font-family: 'Cinzel', serif; font-size: 14px; cursor: pointer;
-            transition: all 0.3s ease; letter-spacing: 1px; margin-bottom: 10px;
-        }
-
-        button:hover {
-            background: linear-gradient(180deg, #4a0000 0%, #1a0000 100%);
-            box-shadow: 0 0 15px var(--accent-crimson);
-        }
-
-        button.action-btn { width: auto; padding: 6px 12px; font-size: 12px; margin-right: 5px; }
-
-        #alpha-dashboard, #user-dashboard { display: none; max-width: 800px; }
-
-        .section-box {
-            background: rgba(0,0,0,0.6); padding: 15px; margin-bottom: 20px;
-            border-left: 2px solid var(--accent-crimson);
-        }
-
-        .post-card {
-            background: #0a0a0a; border: 1px solid #333; padding: 15px; margin-bottom: 15px;
-        }
+        :root { --bg-deep: #050505; --accent-crimson: #7a0000; --accent-glow: #ff1a1a; --text-silver: #c0c0c0; }
+        body { margin: 0; padding: 0; background-color: var(--bg-deep); background-image: radial-gradient(circle at center, #1a0000, #050505); background-attachment: fixed; color: var(--text-silver); font-family: 'Playfair Display', serif; display: flex; justify-content: center; min-height: 100vh; padding-top: 40px; }
         
-        .post-card img { max-width: 100%; border-radius: 4px; margin-top: 10px; border: 1px solid #222;}
-
-        .lips {
-            text-align: center; font-size: 45px; margin-bottom: 10px;
-            text-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .timestamp-stamp { font-size: 11px; color: #666; font-family: sans-serif; text-align: right; }
-        .decree-banner { background: #1a0505; border: 1px solid var(--accent-glow); padding: 15px; text-align: center; margin-bottom: 20px; }
+        /* The Moon/Wolf Icon */
+        .moon-icon { width: 120px; height: 120px; margin: 0 auto 20px; position: relative; }
+        
+        .container { background: rgba(10, 10, 15, 0.9); border: 1px solid #333; border-radius: 8px; padding: 30px; width: 95%; max-width: 600px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        h1 { font-family: 'Cinzel', serif; color: var(--accent-crimson); text-align: center; text-transform: uppercase; text-shadow: 2px 2px 10px #000; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: var(--text-silver); box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #1a0000; border: 1px solid var(--accent-crimson); color: white; cursor: pointer; margin-top: 10px; font-family: 'Cinzel', serif; }
+        button:hover { background: var(--accent-crimson); }
+        .post-card { background: #080808; border: 1px solid #222; padding: 15px; margin: 10px 0; }
+        .hidden { display: none; }
+        .proactivity-meter { height: 10px; background: #222; margin: 20px 0; border-radius: 5px; }
+        .meter-fill { height: 100%; background: var(--accent-crimson); width: 0%; transition: width 0.5s; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="login-screen">
-        <div class="lips">🫦</div>
-        <h1>Enter the Shadows</h1>
-        <p style="text-align: center; font-size: 13px; font-style: italic; color: #888;">"Surrender your pride. Ascend through submission."</p>
-        
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="handleLogin()">Step Forward</button>
+<div class="container" id="login-screen">
+    <div class="moon-icon">
+        <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="#e0e0e0" />
+            <path d="M50 20 Q 65 20, 70 35 Q 75 50, 60 65 Q 45 70, 30 60 Q 20 45, 35 30 Z" fill="#333" />
+            <path d="M40 80 L 50 40 L 60 80 Z" fill="#000" /> </svg>
     </div>
+    <h1>The Sovereign Hunt</h1>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="handleLogin()">Ascend</button>
+</div>
 
-    <div class="container" id="alpha-dashboard">
-        <h1>ALPHA SANCTUM</h1>
-        <p style="text-align:center;">Manage the pack. Cultivate the dependency.</p>
-        
-        <div class="section-box">
-            <h3>Issue a Decree (Game/Challenge)</h3>
-            <input type="text" id="alpha-decree" placeholder="e.g., 'A 16-hour fast starts now. Show me your discipline.'">
-            <button onclick="issueDecree()">Broadcast Decree</button>
-        </div>
-
-        <div id="offerings-list">
-            <h3>Pending Offerings</h3>
-            <div id="alpha-pending-content"></div>
-        </div>
-
-        <div id="altar-management" style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
-            <h3>Manage The Altar (Herd Feed)</h3>
-            <div id="alpha-altar-content"></div>
-        </div>
-
-        <button style="margin-top:30px; border-color:#555;" onclick="logout()">Logout</button>
+<div class="container hidden" id="alpha-dashboard">
+    <h1>ALPHA SANCTUM</h1>
+    <div id="user-management">
+        <h3>Pack Management</h3>
+        <div id="user-list"></div>
     </div>
-
-    <div class="container" id="user-dashboard">
-        <h1 id="welcome-user">Welcome</h1>
-        
-        <div id="current-decree" class="decree-banner" style="display:none;">
-            <h4 style="margin:0 0 5px 0; color:var(--accent-glow);">Current Decree from ALPHA</h4>
-            <span id="decree-text" style="font-style: italic;"></span>
-        </div>
-
-        <div class="section-box" id="dynamic-question-container">
-            </div>
-
-        <div class="section-box">
-            <h3>Perform Ritual Offering</h3>
-            <textarea id="user-plans" rows="2" placeholder="Detail your plans to serve the Hunt today..."></textarea>
-            <input type="text" id="offering-url" placeholder="Direct Photo/Video URL">
-            <button onclick="submitOffering()">Submit to ALPHA</button>
-        </div>
-
-        <div class="section-box">
-            <h3>The Altar (Pack Progress)</h3>
-            <p style="font-size: 12px; color: #888; text-align:center;">Witness the evolution of the herd as chosen by the ALPHA.</p>
-            <div id="herd-feed-content"></div>
-        </div>
-
-        <button style="margin-top:20px; border-color:#555;" onclick="logout()">Logout</button>
+    <div id="pending-offerings">
+        <h3>Pending Offerings</h3>
+        <div id="alpha-pending-content"></div>
     </div>
+    <button onclick="logout()">Logout</button>
+</div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+<div class="container hidden" id="user-dashboard">
+    <h1 id="welcome-user">Subject</h1>
+    <div class="proactivity-meter"><div class="meter-fill" id="meter"></div></div>
+    <p style="text-align:center; font-size: 12px;">Proactivity Level: <span id="p-text">0%</span></p>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCO-n3z7eN3Xj1zmISJJxZvjyER9GBVnLc",
-            authDomain: "sovereignhunt.firebaseapp.com",
-            databaseURL: "https://sovereignhunt-default-rtdb.firebaseio.com",
-            projectId: "sovereignhunt",
-            storageBucket: "sovereignhunt.firebasestorage.app",
-            messagingSenderId: "657296200169",
-            appId: "1:657296200169:web:22a0f9364344e682083b78"
-        };
+    <div class="post-card">
+        <h3>Ritual Offering</h3>
+        <input type="file" id="file-upload" accept="image/*,video/*">
+        <textarea id="offering-desc" placeholder="Explain your progress..."></textarea>
+        <button onclick="uploadOffering()">Submit Offering</button>
+    </div>
+    <button onclick="logout()">Logout</button>
+</div>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue, remove, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-        let currentUser = null;
-        let currentUserScore = 0;
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO-n3z7eN3Xj1zmISJJxZvjyER9GBVnLc",
+        authDomain: "sovereignhunt.firebaseapp.com",
+        databaseURL: "https://sovereignhunt-default-rtdb.firebaseio.com",
+        projectId: "sovereignhunt",
+        storageBucket: "sovereignhunt.firebasestorage.app",
+        messagingSenderId: "657296200169",
+        appId: "1:657296200169:web:22a0f9364344e682083b78"
+    };
 
-        window.handleLogin = function() {
-            const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value;
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const storage = getStorage(app);
 
-            if (user === "") return alert("Identify yourself.");
+    let currentUser = null;
 
-            // Alpha hardcoded bypass
-            if (user === 'ALPHA' && pass === 'Football') {
-                currentUser = 'ALPHA';
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('alpha-dashboard').style.display = 'block';
-                loadAlphaDashboard();
-                return;
-            } else if (user === 'ALPHA') {
-                return alert("Incorrect Alpha Credentials.");
-            }
-
-            // Normal User
-            currentUser = user;
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('user-dashboard').style.display = 'block';
-            document.getElementById('welcome-user').innerText = `Subject: ${user}`;
-            
-            // Fetch score to build dynamic questions, then load dashboard
-            onValue(ref(db, 'users/' + user), (snapshot) => {
-                currentUserScore = snapshot.val() ? snapshot.val().totalScore : 0;
-                loadUserDashboard();
-            });
-        };
-
-        function getTemporalData() {
-            const d = new Date();
-            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            return {
-                dayOfWeek: days[d.getDay()],
-                dayOfMonth: d.getDate(),
-                time: d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-            };
+    window.handleLogin = function() {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        if(u === 'ALPHA' && p === 'Football') {
+            currentUser = 'ALPHA';
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('alpha-dashboard').classList.remove('hidden');
+            initAlpha();
+        } else {
+            currentUser = u;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('user-dashboard').classList.remove('hidden');
+            document.getElementById('welcome-user').innerText = `Subject: ${u}`;
         }
+    };
 
-        function loadUserDashboard() {
-            const temp = getTemporalData();
-            const qContainer = document.getElementById('dynamic-question-container');
-            
-            // Dynamic Question Logic Based on Time and User Progress
-            let stagePrompt = currentUserScore < 20 
-                ? "You are unproven. What fundamental weakness will you conquer today?" 
-                : "Your physique is taking shape. How will you assert your superiority and maintain this momentum today?";
-                
-            let dayPrompt = "";
-            if (temp.dayOfWeek === "Monday") dayPrompt = "A new cycle begins. Set the tone for the week.";
-            else if (temp.dayOfWeek === "Friday" || temp.dayOfWeek === "Saturday") dayPrompt = "The weak rest on weekends. How will you outwork them?";
-            else dayPrompt = `It is ${temp.dayOfWeek}. The middle of the grind.`;
+    window.uploadOffering = async function() {
+        const file = document.getElementById('file-upload').files[0];
+        const desc = document.getElementById('offering-desc').value;
+        if(!file) return alert("Select a file.");
 
-            qContainer.innerHTML = `
-                <p style="font-size: 13px; color: var(--accent-crimson); text-align:center;">
-                    [ ${temp.dayOfWeek}, the ${temp.dayOfMonth} | ${temp.time} ]
-                </p>
-                <p style="font-style:italic;">"${dayPrompt}"</p>
-                <p style="font-style:italic;">"${stagePrompt}"</p>
-            `;
+        const storageRef = sRef(storage, 'offerings/' + Date.now() + file.name);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        
+        push(ref(db, 'offerings'), {
+            user: currentUser,
+            url: url,
+            desc: desc,
+            status: 'pending'
+        });
+        alert("Offering submitted. Your proactivity is noted.");
+    };
 
-            // Listeners for Herd Feed and Decrees
-            onValue(ref(db, 'decree'), (snapshot) => {
-                const decree = snapshot.val();
-                if(decree && decree.text) {
-                    document.getElementById('current-decree').style.display = 'block';
-                    document.getElementById('decree-text').innerText = `"${decree.text}"`;
-                }
+    function initAlpha() {
+        onValue(ref(db, 'offerings'), (snap) => {
+            const data = snap.val();
+            const list = document.getElementById('alpha-pending-content');
+            list.innerHTML = '';
+            if(data) Object.keys(data).forEach(k => {
+                list.innerHTML += `<div class="post-card">From: ${data[k].user}<br><a href="${data[k].url}" target="_blank">View File</a></div>`;
             });
+        });
 
-            onValue(ref(db, 'herd_feed'), (snapshot) => {
-                const feed = snapshot.val();
-                const container = document.getElementById('herd-feed-content');
-                container.innerHTML = '';
-                if(feed) {
-                    // Sort to show newest first
-                    Object.values(feed).sort((a,b) => b.timestamp - a.timestamp).forEach(item => {
-                        container.innerHTML += `
-                            <div class="post-card">
-                                <strong>Subject: ${item.username}</strong>
-                                <p style="color:var(--accent-crimson); font-size:14px; font-style:italic;">" ${item.alphaMessage} "</p>
-                                <img src="${item.photoUrl}" alt="Offering">
-                            </div>
-                        `;
-                    });
-                } else {
-                    container.innerHTML = "<p style='text-align:center; color:#555;'>The Altar is currently empty.</p>";
-                }
+        // List Users for deletion
+        onValue(ref(db, 'users'), (snap) => {
+            const users = snap.val();
+            const div = document.getElementById('user-list');
+            div.innerHTML = '';
+            if(users) Object.keys(users).forEach(u => {
+                div.innerHTML += `<div>${u} <button onclick="deleteUser('${u}')">Exile</button></div>`;
             });
+        });
+    }
+
+    window.deleteUser = function(user) {
+        if(confirm(`Exile ${user} from the pack?`)) {
+            remove(ref(db, 'users/' + user));
         }
+    };
 
-        window.submitOffering = function() {
-            const plans = document.getElementById('user-plans').value;
-            const photoUrl = document.getElementById('offering-url').value;
-            if(!photoUrl || !plans) return alert("You must provide both your plans and a visual offering.");
-
-            const temp = getTemporalData();
-            const newOffering = push(ref(db, 'offerings'));
-            
-            set(newOffering, {
-                username: currentUser,
-                plans: plans,
-                photoUrl: photoUrl,
-                dayOfWeek: temp.dayOfWeek,
-                dayOfMonth: temp.dayOfMonth,
-                time: temp.time,
-                status: 'pending',
-                timestamp: Date.now()
-            }).then(() => {
-                alert("Your offering has been cast into the shadows for the ALPHA's judgment.");
-                document.getElementById('user-plans').value = '';
-                document.getElementById('offering-url').value = '';
-            });
-        };
-
-        // --- ALPHA FUNCTIONS ---
-
-        window.issueDecree = function() {
-            const text = document.getElementById('alpha-decree').value;
-            if(!text) return;
-            set(ref(db, 'decree'), { text: text, timestamp: Date.now() }).then(() => {
-                alert("Decree broadcasted to the pack.");
-                document.getElementById('alpha-decree').value = '';
-            });
-        };
-
-        function loadAlphaDashboard() {
-            // Load Pending Offerings
-            onValue(ref(db, 'offerings'), (snapshot) => {
-                const data = snapshot.val();
-                const list = document.getElementById('alpha-pending-content');
-                list.innerHTML = '';
-                
-                if (data) {
-                    Object.keys(data).forEach(key => {
-                        const offer = data[key];
-                        if(offer.status === 'pending') {
-                            list.innerHTML += `
-                                <div class="post-card">
-                                    <div class="timestamp-stamp">${offer.dayOfWeek}, ${offer.dayOfMonth} @ ${offer.time}</div>
-                                    <strong>${offer.username}</strong>
-                                    <p style="font-size:13px; color:#aaa;">Plans: ${offer.plans}</p>
-                                    <img src="${offer.photoUrl}" style="max-width:200px; display:block; margin: 10px 0;"><br>
-                                    <button class="action-btn" onclick="saveOffering('${key}', '${offer.username}')">Save (Grade +10)</button>
-                                    <button class="action-btn" onclick="displayToHerd('${key}', '${offer.username}', '${offer.photoUrl}')">Display to Herd</button>
-                                    <button class="action-btn" style="border-color:#555;" onclick="deleteOffering('${key}')">Delete/Reject</button>
-                                </div>
-                            `;
-                        }
-                    });
-                }
-            });
-
-            // Load Altar for Management (Undo/Remove)
-            onValue(ref(db, 'herd_feed'), (snapshot) => {
-                const feed = snapshot.val();
-                const altarList = document.getElementById('alpha-altar-content');
-                altarList.innerHTML = '';
-                if(feed) {
-                    Object.keys(feed).forEach(key => {
-                        const item = feed[key];
-                        altarList.innerHTML += `
-                            <div style="background:#111; border:1px solid #333; padding:10px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;">
-                                <span style="font-size:13px;">${item.username} - "${item.alphaMessage}"</span>
-                                <button class="action-btn" style="border-color:#555; margin:0;" onclick="removeFromHerd('${key}')">Remove (Undo)</button>
-                            </div>
-                        `;
-                    });
-                }
-            });
-        }
-
-        window.saveOffering = function(id, username) {
-            update(ref(db, 'offerings/' + id), { status: 'saved' });
-            
-            // Give merit points silently
-            const userRef = ref(db, 'users/' + username);
-            onValue(userRef, (snapshot) => {
-                let currentScore = snapshot.val() ? snapshot.val().totalScore : 0;
-                set(ref(db, 'users/' + username), { totalScore: currentScore + 10 });
-            }, { onlyOnce: true });
-        };
-
-        window.displayToHerd = function(id, username, photoUrl) {
-            const msg = prompt("Enter the message to motivate the pack regarding these key physique changes:");
-            if(msg !== null) {
-                // Mark offering as displayed
-                update(ref(db, 'offerings/' + id), { status: 'displayed' });
-                
-                // Push to Herd Feed
-                push(ref(db, 'herd_feed'), {
-                    username: username,
-                    photoUrl: photoUrl,
-                    alphaMessage: msg,
-                    timestamp: Date.now()
-                });
-                
-                // Merit points
-                const userRef = ref(db, 'users/' + username);
-                onValue(userRef, (snapshot) => {
-                    let currentScore = snapshot.val() ? snapshot.val().totalScore : 0;
-                    set(ref(db, 'users/' + username), { totalScore: currentScore + 20 }); // Bonus for being displayed
-                }, { onlyOnce: true });
-            }
-        };
-
-        window.deleteOffering = function(id) {
-            if(confirm("Destroy this offering entirely?")) {
-                remove(ref(db, 'offerings/' + id));
-            }
-        };
-
-        window.removeFromHerd = function(feedId) {
-            remove(ref(db, 'herd_feed/' + feedId));
-        };
-
-        window.logout = function() {
-            currentUser = null;
-            currentUserScore = 0;
-            document.getElementById('alpha-dashboard').style.display = 'none';
-            document.getElementById('user-dashboard').style.display = 'none';
-            document.getElementById('login-screen').style.display = 'block';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-        }
-    </script>
+    window.logout = () => location.reload();
+</script>
 </body>
 </html>
