@@ -3,61 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sovereign Hunt | Control</title>
+    <title>Sovereign Hunt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #c0c0c0; font-family: 'Playfair Display', serif; }
-        .container { max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #333; }
-        textarea, input { width: 100%; margin: 10px 0; background: #111; border: 1px solid #444; color: white; padding: 10px; }
-        button { width: 100%; padding: 15px; background: #7a0000; color: white; border: none; cursor: pointer; }
+        :root { --bg: #050505; --crimson: #7a0000; --silver: #c0c0c0; }
+        body { margin: 0; padding: 0; background-color: var(--bg); color: var(--silver); font-family: 'Playfair Display', serif; display: flex; justify-content: center; min-height: 100vh; }
+        .container { width: 90%; max-width: 500px; padding: 20px; text-align: center; }
+        
+        /* Fixed Icon */
+        .moon-icon { width: 100px; height: 100px; margin: 20px auto; }
+        
+        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0; background: #111; border: 1px solid #333; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: var(--crimson); color: white; border: none; cursor: pointer; font-family: 'Cinzel'; margin-top: 10px; }
+        
+        .hidden { display: none; }
+        .card { background: #0a0a0a; border: 1px solid #222; padding: 20px; margin-top: 20px; text-align: left; }
     </style>
 </head>
 <body>
 
-<div class="container" id="app-root">
+<div class="container" id="login-screen">
+    <div class="moon-icon">
+        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#e0e0e0"/><path d="M50 10 Q 70 10, 80 30 Q 90 50, 70 70 Q 50 80, 30 70 Q 10 50, 20 30 Z" fill="#333"/><path d="M40 85 L 50 45 L 60 85 Z" fill="#000"/></svg>
+    </div>
     <h1>The Hunt</h1>
-    <div id="dynamic-survey"></div>
-    <input type="file" id="file-offering">
-    <button onclick="submitOffering()">Submit Offering</button>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="authLogin()">Enter The Den</button>
+</div>
+
+<div class="container hidden" id="user-dashboard">
+    <h2 id="user-welcome">Welcome</h2>
+    <div id="survey-area" class="card">
+        <h3>Loyalty Assessment</h3>
+        <div id="survey-questions"></div>
+        <button id="submit-survey" onclick="completeSurvey()">Commit to the Hunt</button>
+    </div>
+    
+    <div id="submission-area" class="card hidden">
+        <h3>Perform Offering</h3>
+        <input type="file" id="file-input">
+        <textarea id="offering-desc" placeholder="Evidence of progress..."></textarea>
+        <button id="upload-btn" onclick="processSubmission()">Submit Visual Offering</button>
+    </div>
+</div>
+
+<div class="container hidden" id="alpha-dashboard">
+    <h1>ALPHA CONTROL</h1>
+    <div class="card">
+        <h3>Pending Subjects</h3>
+        <div id="pending-users"></div>
+    </div>
+    <div class="card">
+        <h3>Pending Offerings</h3>
+        <div id="pending-offerings"></div>
+    </div>
 </div>
 
 <script type="module">
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
     import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-    // Power-based dynamic question pool
-    const getQuestions = (score) => {
-        const base = ["What part of your old self are you destroying today?", "Why do you seek to be noticed by the pack?"];
-        const advanced = ["What weakness have you mastered since your last submission?", "How are you using your progress to intimidate your rivals?"];
-        return score > 20 ? advanced : base;
+    const firebaseConfig = {
+        apiKey: "AIzaSyCO-n3z7eN3Xj1zmISJJxZvjyER9GBVnLc",
+        authDomain: "sovereignhunt.firebaseapp.com",
+        databaseURL: "https://sovereignhunt-default-rtdb.firebaseio.com",
+        projectId: "sovereignhunt",
+        storageBucket: "sovereignhunt.firebasestorage.app",
+        messagingSenderId: "657296200169",
+        appId: "1:657296200169:web:22a0f9364344e682083b78"
     };
 
-    window.submitOffering = async () => {
-        const fileInput = document.getElementById('file-offering');
-        const file = fileInput.files[0];
-        
-        if (!file) return alert("You must provide a visual offering.");
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const storage = getStorage(app);
 
-        try {
-            // Re-initialized pathing to ensure stability
-            const storageRef = sRef(getStorage(), 'offerings/' + Date.now() + "_" + file.name);
-            
-            // Explicit upload process
-            const snapshot = await uploadBytes(storageRef, file);
-            const url = await getDownloadURL(snapshot.ref);
-            
-            // Firebase DB Record
-            await set(ref(getDatabase(), 'offerings/' + Date.now()), {
-                user: "current_user_placeholder",
-                url: url,
-                timestamp: Date.now()
-            });
-            
-            alert("Offering successfully received by the ALPHA.");
-        } catch (error) {
-            console.error("Submission failed:", error);
-            alert("Submission failed. Ensure the file is not corrupted.");
+    let currentUser = "";
+    
+    // Power.pdf themed questions
+    const questions = [
+        "What is the greatest sacrifice you have made to attain your current level of fitness?",
+        "If the pack falters, how do you intend to enforce the Alpha's will?",
+        "When you look at your own reflection, do you see weakness to be burned away?",
+        "Are you prepared to prioritize the Alpha's goals over your own comfort?",
+        "Why does the idea of total submission to the hunt drive you toward perfection?"
+    ];
+
+    window.authLogin = async function() {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value;
+        if (!u) return;
+
+        if (u === 'ALPHA' && p === 'Football') {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('alpha-dashboard').classList.remove('hidden');
+            loadAlpha();
+        } else {
+            const snap = await get(ref(db, 'users/' + u));
+            if (!snap.exists()) {
+                await set(ref(db, 'users/' + u), { status: 'pending' });
+                alert("Account created. Awaiting Alpha verification.");
+            } else if (snap.val().status !== 'active') {
+                alert("Awaiting Alpha verification.");
+            } else {
+                currentUser = u;
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('user-dashboard').classList.remove('hidden');
+                initSurvey();
+            }
         }
     };
+
+    function initSurvey() {
+        const container = document.getElementById('survey-questions');
+        container.innerHTML = questions.map((q, i) => `<p>${i+1}. ${q}</p><textarea id="q${i}"></textarea>`).join('');
+    }
+
+    window.completeSurvey = function() {
+        document.getElementById('survey-area').classList.add('hidden');
+        document.getElementById('submission-area').classList.remove('hidden');
+    };
+
+    window.processSubmission = async function() {
+        const file = document.getElementById('file-input').files[0];
+        const btn = document.getElementById('upload-btn');
+        if (!file) return alert("Select an offering.");
+        
+        btn.innerText = "Submitting to Alpha...";
+        try {
+            const storageRef = sRef(storage, 'offerings/' + Date.now());
+            await uploadBytes(storageRef, file);
+            const url = await getDownloadURL(storageRef);
+            await set(ref(db, 'offerings/' + Date.now()), { user: currentUser, url: url });
+            alert("Offering received.");
+            btn.innerText = "Submit Visual Offering";
+        } catch(e) { alert("Error submitting."); btn.innerText = "Submit Visual Offering"; }
+    };
+
+    function loadAlpha() {
+        onValue(ref(db, 'users'), (snap) => {
+            const users = snap.val();
+            document.getElementById('pending-users').innerHTML = Object.keys(users)
+                .filter(u => users[u].status === 'pending')
+                .map(u => `<div>${u} <button onclick="approve('${u}')">Approve</button></div>`).join('');
+        });
+    }
+
+    window.approve = (u) => update(ref(db, 'users/' + u), { status: 'active' });
 </script>
 </body>
 </html>
