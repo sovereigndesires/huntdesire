@@ -7,185 +7,154 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #030303;
-            --accent-red: #8b0000;
-            --text-silver: #d3d3d3;
-            --panel-bg: rgba(20, 20, 25, 0.85);
+            --bg-deep: #050505;
+            --accent-crimson: #7a0000;
+            --accent-glow: #ff1a1a;
+            --text-silver: #c0c0c0;
+            --panel-bg: rgba(15, 15, 20, 0.85);
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--primary-bg);
-            background-image: url('https://images.unsplash.com/photo-1534349762230-e0cb9cb6e5a4?q=80&w=2000&auto=format&fit=crop'); /* Placeholder for Wolf/Moon silhouette */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            margin: 0; padding: 0;
+            background-color: var(--bg-deep);
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1534349762230-e0cb9cb6e5a4?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: fixed;
             color: var(--text-silver);
             font-family: 'Playfair Display', serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            display: flex; justify-content: center; align-items: flex-start;
+            min-height: 100vh; padding-top: 40px; box-sizing: border-box;
         }
 
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             font-family: 'Cinzel', serif;
-            color: var(--accent-red);
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px #000;
+            color: var(--accent-crimson);
+            text-align: center; text-transform: uppercase; letter-spacing: 2px;
+            text-shadow: 1px 1px 5px #000;
         }
 
         .container {
             background: var(--panel-bg);
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 40px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
+            border: 1px solid #222; border-radius: 8px;
+            padding: 30px; width: 95%; max-width: 600px;
+            box-shadow: 0 0 40px rgba(122, 0, 0, 0.2);
+            backdrop-filter: blur(8px); margin-bottom: 40px;
         }
 
-        /* Input Styling */
-        input[type="text"], input[type="password"], input[type="file"], textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0 20px 0;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid #444;
-            color: var(--text-silver);
-            font-family: 'Playfair Display', serif;
+        input[type="text"], input[type="password"], textarea {
+            width: 100%; padding: 12px; margin: 10px 0 20px 0;
+            background: rgba(0, 0, 0, 0.8); border: 1px solid #333;
+            color: var(--text-silver); font-family: 'Playfair Display', serif;
             box-sizing: border-box;
         }
 
         input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-red);
-            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+            outline: none; border-color: var(--accent-crimson);
+            box-shadow: 0 0 10px rgba(122, 0, 0, 0.4);
         }
 
         button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(180deg, #3a0000 0%, #1a0000 100%);
-            border: 1px solid var(--accent-red);
-            color: var(--text-silver);
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
+            width: 100%; padding: 12px;
+            background: linear-gradient(180deg, #2a0000 0%, #0a0000 100%);
+            border: 1px solid var(--accent-crimson); color: var(--text-silver);
+            font-family: 'Cinzel', serif; font-size: 14px; cursor: pointer;
+            transition: all 0.3s ease; letter-spacing: 1px; margin-bottom: 10px;
         }
 
         button:hover {
-            background: linear-gradient(180deg, #5a0000 0%, #2a0000 100%);
-            box-shadow: 0 0 15px var(--accent-red);
+            background: linear-gradient(180deg, #4a0000 0%, #1a0000 100%);
+            box-shadow: 0 0 15px var(--accent-crimson);
         }
 
-        /* Sections */
-        #alpha-dashboard, #user-dashboard {
-            display: none;
-            max-width: 800px;
+        button.action-btn { width: auto; padding: 6px 12px; font-size: 12px; margin-right: 5px; }
+
+        #alpha-dashboard, #user-dashboard { display: none; max-width: 800px; }
+
+        .section-box {
+            background: rgba(0,0,0,0.6); padding: 15px; margin-bottom: 20px;
+            border-left: 2px solid var(--accent-crimson);
         }
 
-        .leaderboard {
-            margin-top: 30px;
-            border-top: 1px solid #444;
-            padding-top: 20px;
-        }
-
-        .user-card {
-            background: rgba(0,0,0,0.7);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-left: 3px solid var(--accent-red);
-        }
-
-        .rating-btn {
-            width: auto;
-            padding: 5px 10px;
-            margin: 2px;
-            font-size: 12px;
-        }
-
-        /* Visual Seductive Element */
-        .login-visual {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 40px;
-            color: var(--accent-red);
-            text-shadow: 0 0 15px var(--accent-red);
+        .post-card {
+            background: #0a0a0a; border: 1px solid #333; padding: 15px; margin-bottom: 15px;
         }
         
-        .disclaimer {
-            font-size: 11px;
-            color: #666;
-            text-align: center;
-            margin-top: 20px;
-            font-style: italic;
+        .post-card img { max-width: 100%; border-radius: 4px; margin-top: 10px; border: 1px solid #222;}
+
+        .lips {
+            text-align: center; font-size: 45px; margin-bottom: 10px;
+            text-shadow: 0 0 20px var(--accent-glow);
         }
+
+        .timestamp-stamp { font-size: 11px; color: #666; font-family: sans-serif; text-align: right; }
+        .decree-banner { background: #1a0505; border: 1px solid var(--accent-glow); padding: 15px; text-align: center; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div class="container" id="login-screen">
-        <div class="login-visual">🫦</div> <h1>Submit to the Hunt</h1>
-        <p style="text-align: center; font-style: italic;">"Showcase your progress. Await the Alpha's verdict."</p>
+        <div class="lips">🫦</div>
+        <h1>Enter the Shadows</h1>
+        <p style="text-align: center; font-size: 13px; font-style: italic; color: #888;">"Surrender your pride. Ascend through submission."</p>
         
-        <input type="text" id="username" placeholder="Username (or 'ALPHA')">
+        <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
-        <button onclick="handleLogin()">Enter the Den</button>
-        <p class="disclaimer">By entering, you agree to the rules of submission. Your offerings are private to the ALPHA.</p>
+        <button onclick="handleLogin()">Step Forward</button>
     </div>
 
     <div class="container" id="alpha-dashboard">
         <h1>ALPHA SANCTUM</h1>
-        <p>Welcome, Alpha. Review your subjects.</p>
+        <p style="text-align:center;">Manage the pack. Cultivate the dependency.</p>
         
-        <div id="offerings-list">
-            <h3>Pending Offerings</h3>
-            </div>
-
-        <div class="leaderboard">
-            <h3>Global Leaderboard</h3>
-            <div id="alpha-leaderboard-content"></div>
+        <div class="section-box">
+            <h3>Issue a Decree (Game/Challenge)</h3>
+            <input type="text" id="alpha-decree" placeholder="e.g., 'A 16-hour fast starts now. Show me your discipline.'">
+            <button onclick="issueDecree()">Broadcast Decree</button>
         </div>
 
-        <button style="margin-top:20px;" onclick="logout()">Logout</button>
+        <div id="offerings-list">
+            <h3>Pending Offerings</h3>
+            <div id="alpha-pending-content"></div>
+        </div>
+
+        <div id="altar-management" style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+            <h3>Manage The Altar (Herd Feed)</h3>
+            <div id="alpha-altar-content"></div>
+        </div>
+
+        <button style="margin-top:30px; border-color:#555;" onclick="logout()">Logout</button>
     </div>
 
     <div class="container" id="user-dashboard">
         <h1 id="welcome-user">Welcome</h1>
-        <p>Your progress is measured. Offer your latest submission to the ALPHA.</p>
-
-        <div style="background: rgba(0,0,0,0.5); padding: 15px; margin-bottom: 20px;">
-            <p><em>What drives your submission today?</em></p>
-            <input type="text" id="intent" placeholder="Describe your intent...">
-            <p><em>How have you improved since your last offering?</em></p>
-            <textarea id="progress-desc" rows="3" placeholder="Detail your physical progress..."></textarea>
+        
+        <div id="current-decree" class="decree-banner" style="display:none;">
+            <h4 style="margin:0 0 5px 0; color:var(--accent-glow);">Current Decree from ALPHA</h4>
+            <span id="decree-text" style="font-style: italic;"></span>
         </div>
 
-        <label for="offering">Provide Visual Offering (URL for Demo):</label>
-        <input type="text" id="offering" placeholder="Image/Video URL">
-        <button onclick="submitOffering()">Submit Offering</button>
+        <div class="section-box" id="dynamic-question-container">
+            </div>
 
-        <div class="leaderboard">
-            <h3>Merit Leaderboard</h3>
-            <p style="font-size: 12px; color: #888;">Only top subjects earn their place.</p>
-            <div id="user-leaderboard-content"></div>
+        <div class="section-box">
+            <h3>Perform Ritual Offering</h3>
+            <textarea id="user-plans" rows="2" placeholder="Detail your plans to serve the Hunt today..."></textarea>
+            <input type="text" id="offering-url" placeholder="Direct Photo/Video URL">
+            <button onclick="submitOffering()">Submit to ALPHA</button>
         </div>
 
-        <button style="margin-top:20px;" onclick="logout()">Logout</button>
+        <div class="section-box">
+            <h3>The Altar (Pack Progress)</h3>
+            <p style="font-size: 12px; color: #888; text-align:center;">Witness the evolution of the herd as chosen by the ALPHA.</p>
+            <div id="herd-feed-content"></div>
+        </div>
+
+        <button style="margin-top:20px; border-color:#555;" onclick="logout()">Logout</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // Firebase Configuration as provided
         const firebaseConfig = {
             apiKey: "AIzaSyCO-n3z7eN3Xj1zmISJJxZvjyER9GBVnLc",
             authDomain: "sovereignhunt.firebaseapp.com",
@@ -200,120 +169,174 @@
         const db = getDatabase(app);
 
         let currentUser = null;
+        let currentUserScore = 0;
 
-        // Make functions globally available for inline HTML onclick handlers
         window.handleLogin = function() {
             const user = document.getElementById('username').value.trim();
-            const pass = document.getElementById('password').value; // In a real app, use Firebase Auth
+            const pass = document.getElementById('password').value;
 
-            if (user === "") return alert("Enter a username.");
+            if (user === "") return alert("Identify yourself.");
 
-            currentUser = user;
-            document.getElementById('login-screen').style.display = 'none';
-
-            if (user === 'ALPHA') {
+            // Alpha hardcoded bypass
+            if (user === 'ALPHA' && pass === 'Football') {
+                currentUser = 'ALPHA';
+                document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('alpha-dashboard').style.display = 'block';
                 loadAlphaDashboard();
-            } else {
-                document.getElementById('user-dashboard').style.display = 'block';
-                document.getElementById('welcome-user').innerText = `Welcome, ${user}`;
-                loadUserDashboard();
+                return;
+            } else if (user === 'ALPHA') {
+                return alert("Incorrect Alpha Credentials.");
             }
+
+            // Normal User
+            currentUser = user;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('user-dashboard').style.display = 'block';
+            document.getElementById('welcome-user').innerText = `Subject: ${user}`;
+            
+            // Fetch score to build dynamic questions, then load dashboard
+            onValue(ref(db, 'users/' + user), (snapshot) => {
+                currentUserScore = snapshot.val() ? snapshot.val().totalScore : 0;
+                loadUserDashboard();
+            });
         };
 
+        function getTemporalData() {
+            const d = new Date();
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            return {
+                dayOfWeek: days[d.getDay()],
+                dayOfMonth: d.getDate(),
+                time: d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
+        }
+
+        function loadUserDashboard() {
+            const temp = getTemporalData();
+            const qContainer = document.getElementById('dynamic-question-container');
+            
+            // Dynamic Question Logic Based on Time and User Progress
+            let stagePrompt = currentUserScore < 20 
+                ? "You are unproven. What fundamental weakness will you conquer today?" 
+                : "Your physique is taking shape. How will you assert your superiority and maintain this momentum today?";
+                
+            let dayPrompt = "";
+            if (temp.dayOfWeek === "Monday") dayPrompt = "A new cycle begins. Set the tone for the week.";
+            else if (temp.dayOfWeek === "Friday" || temp.dayOfWeek === "Saturday") dayPrompt = "The weak rest on weekends. How will you outwork them?";
+            else dayPrompt = `It is ${temp.dayOfWeek}. The middle of the grind.`;
+
+            qContainer.innerHTML = `
+                <p style="font-size: 13px; color: var(--accent-crimson); text-align:center;">
+                    [ ${temp.dayOfWeek}, the ${temp.dayOfMonth} | ${temp.time} ]
+                </p>
+                <p style="font-style:italic;">"${dayPrompt}"</p>
+                <p style="font-style:italic;">"${stagePrompt}"</p>
+            `;
+
+            // Listeners for Herd Feed and Decrees
+            onValue(ref(db, 'decree'), (snapshot) => {
+                const decree = snapshot.val();
+                if(decree && decree.text) {
+                    document.getElementById('current-decree').style.display = 'block';
+                    document.getElementById('decree-text').innerText = `"${decree.text}"`;
+                }
+            });
+
+            onValue(ref(db, 'herd_feed'), (snapshot) => {
+                const feed = snapshot.val();
+                const container = document.getElementById('herd-feed-content');
+                container.innerHTML = '';
+                if(feed) {
+                    // Sort to show newest first
+                    Object.values(feed).sort((a,b) => b.timestamp - a.timestamp).forEach(item => {
+                        container.innerHTML += `
+                            <div class="post-card">
+                                <strong>Subject: ${item.username}</strong>
+                                <p style="color:var(--accent-crimson); font-size:14px; font-style:italic;">" ${item.alphaMessage} "</p>
+                                <img src="${item.photoUrl}" alt="Offering">
+                            </div>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = "<p style='text-align:center; color:#555;'>The Altar is currently empty.</p>";
+                }
+            });
+        }
+
         window.submitOffering = function() {
-            const intent = document.getElementById('intent').value;
-            const progress = document.getElementById('progress-desc').value;
-            const mediaUrl = document.getElementById('offering').value;
+            const plans = document.getElementById('user-plans').value;
+            const photoUrl = document.getElementById('offering-url').value;
+            if(!photoUrl || !plans) return alert("You must provide both your plans and a visual offering.");
 
-            if(!mediaUrl) return alert("You must provide an offering.");
-
-            const offeringsRef = ref(db, 'offerings');
-            const newOffering = push(offeringsRef);
+            const temp = getTemporalData();
+            const newOffering = push(ref(db, 'offerings'));
             
             set(newOffering, {
                 username: currentUser,
-                intent: intent,
-                progress: progress,
-                mediaUrl: mediaUrl,
+                plans: plans,
+                photoUrl: photoUrl,
+                dayOfWeek: temp.dayOfWeek,
+                dayOfMonth: temp.dayOfMonth,
+                time: temp.time,
                 status: 'pending',
-                score: 0,
                 timestamp: Date.now()
             }).then(() => {
-                alert("Your offering has been submitted to the ALPHA.");
-                document.getElementById('intent').value = '';
-                document.getElementById('progress-desc').value = '';
-                document.getElementById('offering').value = '';
+                alert("Your offering has been cast into the shadows for the ALPHA's judgment.");
+                document.getElementById('user-plans').value = '';
+                document.getElementById('offering-url').value = '';
+            });
+        };
+
+        // --- ALPHA FUNCTIONS ---
+
+        window.issueDecree = function() {
+            const text = document.getElementById('alpha-decree').value;
+            if(!text) return;
+            set(ref(db, 'decree'), { text: text, timestamp: Date.now() }).then(() => {
+                alert("Decree broadcasted to the pack.");
+                document.getElementById('alpha-decree').value = '';
             });
         };
 
         function loadAlphaDashboard() {
-            const offeringsRef = ref(db, 'offerings');
-            onValue(offeringsRef, (snapshot) => {
+            // Load Pending Offerings
+            onValue(ref(db, 'offerings'), (snapshot) => {
                 const data = snapshot.val();
-                const list = document.getElementById('offerings-list');
-                list.innerHTML = '<h3>Pending Offerings</h3>';
+                const list = document.getElementById('alpha-pending-content');
+                list.innerHTML = '';
                 
                 if (data) {
                     Object.keys(data).forEach(key => {
                         const offer = data[key];
                         if(offer.status === 'pending') {
                             list.innerHTML += `
-                                <div class="user-card">
-                                    <strong>${offer.username}</strong><br>
-                                    <span style="font-size:12px; color:#aaa;">Intent: ${offer.intent}</span><br>
-                                    <span style="font-size:12px; color:#aaa;">Progress: ${offer.progress}</span><br>
-                                    <a href="${offer.mediaUrl}" target="_blank" style="color:var(--accent-red);">View Visual Offering</a><br>
-                                    <div style="margin-top:10px;">
-                                        Grade (1-10): 
-                                        ${[1,2,3,4,5,6,7,8,9,10].map(n => `<button class="rating-btn" onclick="gradeOffering('${key}', ${n}, '${offer.username}')">${n}</button>`).join('')}
-                                    </div>
+                                <div class="post-card">
+                                    <div class="timestamp-stamp">${offer.dayOfWeek}, ${offer.dayOfMonth} @ ${offer.time}</div>
+                                    <strong>${offer.username}</strong>
+                                    <p style="font-size:13px; color:#aaa;">Plans: ${offer.plans}</p>
+                                    <img src="${offer.photoUrl}" style="max-width:200px; display:block; margin: 10px 0;"><br>
+                                    <button class="action-btn" onclick="saveOffering('${key}', '${offer.username}')">Save (Grade +10)</button>
+                                    <button class="action-btn" onclick="displayToHerd('${key}', '${offer.username}', '${offer.photoUrl}')">Display to Herd</button>
+                                    <button class="action-btn" style="border-color:#555;" onclick="deleteOffering('${key}')">Delete/Reject</button>
                                 </div>
                             `;
                         }
                     });
                 }
             });
-            updateLeaderboard('alpha-leaderboard-content');
-        }
 
-        window.gradeOffering = function(offeringId, score, username) {
-            const updates = {};
-            updates['/offerings/' + offeringId + '/status'] = 'graded';
-            updates['/offerings/' + offeringId + '/score'] = score;
-            update(ref(db), updates);
-
-            // Update User Merit Total
-            const userRef = ref(db, 'users/' + username);
-            onValue(userRef, (snapshot) => {
-                let currentScore = snapshot.val() ? snapshot.val().totalScore : 0;
-                set(ref(db, 'users/' + username), {
-                    totalScore: currentScore + score
-                });
-            }, { onlyOnce: true });
-        };
-
-        function loadUserDashboard() {
-            updateLeaderboard('user-leaderboard-content');
-        }
-
-        function updateLeaderboard(elementId) {
-            const usersRef = ref(db, 'users');
-            onValue(usersRef, (snapshot) => {
-                const data = snapshot.val();
-                const container = document.getElementById(elementId);
-                container.innerHTML = '';
-                
-                if (data) {
-                    let sortedUsers = Object.keys(data).map(key => {
-                        return { username: key, score: data[key].totalScore };
-                    }).sort((a, b) => b.score - a.score);
-
-                    sortedUsers.forEach((user, index) => {
-                        container.innerHTML += `
-                            <div style="display:flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #333;">
-                                <span>#${index + 1} ${user.username}</span>
-                                <span style="color:var(--accent-red);">${user.score} pts</span>
+            // Load Altar for Management (Undo/Remove)
+            onValue(ref(db, 'herd_feed'), (snapshot) => {
+                const feed = snapshot.val();
+                const altarList = document.getElementById('alpha-altar-content');
+                altarList.innerHTML = '';
+                if(feed) {
+                    Object.keys(feed).forEach(key => {
+                        const item = feed[key];
+                        altarList.innerHTML += `
+                            <div style="background:#111; border:1px solid #333; padding:10px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-size:13px;">${item.username} - "${item.alphaMessage}"</span>
+                                <button class="action-btn" style="border-color:#555; margin:0;" onclick="removeFromHerd('${key}')">Remove (Undo)</button>
                             </div>
                         `;
                     });
@@ -321,8 +344,53 @@
             });
         }
 
+        window.saveOffering = function(id, username) {
+            update(ref(db, 'offerings/' + id), { status: 'saved' });
+            
+            // Give merit points silently
+            const userRef = ref(db, 'users/' + username);
+            onValue(userRef, (snapshot) => {
+                let currentScore = snapshot.val() ? snapshot.val().totalScore : 0;
+                set(ref(db, 'users/' + username), { totalScore: currentScore + 10 });
+            }, { onlyOnce: true });
+        };
+
+        window.displayToHerd = function(id, username, photoUrl) {
+            const msg = prompt("Enter the message to motivate the pack regarding these key physique changes:");
+            if(msg !== null) {
+                // Mark offering as displayed
+                update(ref(db, 'offerings/' + id), { status: 'displayed' });
+                
+                // Push to Herd Feed
+                push(ref(db, 'herd_feed'), {
+                    username: username,
+                    photoUrl: photoUrl,
+                    alphaMessage: msg,
+                    timestamp: Date.now()
+                });
+                
+                // Merit points
+                const userRef = ref(db, 'users/' + username);
+                onValue(userRef, (snapshot) => {
+                    let currentScore = snapshot.val() ? snapshot.val().totalScore : 0;
+                    set(ref(db, 'users/' + username), { totalScore: currentScore + 20 }); // Bonus for being displayed
+                }, { onlyOnce: true });
+            }
+        };
+
+        window.deleteOffering = function(id) {
+            if(confirm("Destroy this offering entirely?")) {
+                remove(ref(db, 'offerings/' + id));
+            }
+        };
+
+        window.removeFromHerd = function(feedId) {
+            remove(ref(db, 'herd_feed/' + feedId));
+        };
+
         window.logout = function() {
             currentUser = null;
+            currentUserScore = 0;
             document.getElementById('alpha-dashboard').style.display = 'none';
             document.getElementById('user-dashboard').style.display = 'none';
             document.getElementById('login-screen').style.display = 'block';
